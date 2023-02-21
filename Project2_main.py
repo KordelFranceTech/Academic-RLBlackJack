@@ -3,6 +3,24 @@
 import Project2_agent as ag2
 import Project2_env as env2
 # import Project2_tests as tst
+import matplotlib.pyplot as plt
+
+
+def plot_data(rewards):
+    x: list = list(range(0, len(rewards)))
+    y: list = []
+    win_count: int = 0
+    for i in range(len(rewards)):
+        if rewards[i] == 1:
+            win_count += 1
+        y.append(float(win_count / (i + 1)))
+    plt.plot(x, y, 'r-')
+    # plt.scatter(x, y, label='Time vs % Wins')
+    plt.title("# Trials vs % Wins")
+    plt.xlabel('# Trials')
+    plt.ylabel('% Wins')
+    plt.legend()
+    plt.show()
 
 
 def main():
@@ -12,12 +30,14 @@ def main():
     environment = env2.Blackjack()
     agent = ag2.MCAgent()
     agent.reset()
+    all_rewards: list = []
+
     # Check that the environment parameters match
     if (environment.get_number_of_states() == agent.get_number_of_states()) and \
             (environment.get_number_of_actions() == agent.get_number_of_actions()):
 
         # Play 500,000 games
-        for i in range(0, 501):
+        for i in range(0, 5001):
 
             # reset the game and observe the current state
             current_state = environment.reset()
@@ -42,11 +62,13 @@ def main():
             agent.update_q(next_state, reward)
 
             # --- Add data collection here as appropriate ---#
+            all_rewards.append(reward)
             if reward == 1:
                 wins += 1
 
+        plot_data(all_rewards)
         print("\nProgram completed successfully.")
-        print(f"win rate: {float(wins / 500)}")
+        print(f"win rate: {float(wins / 5000)}")
     else:
         print("Environment and Agent parameters do not match. Terminating program.")
 

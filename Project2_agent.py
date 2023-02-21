@@ -28,7 +28,8 @@ class MCAgent:
     def e_greedy(self, actions):
         a_star_idx = np.argmax(actions)
         rng = np.random.default_rng()
-        if self.epsilon <= rng.random():
+        epsilon_adj = self.epsilon * (1 - (self.turn - 500))
+        if epsilon_adj <= rng.random():
             return a_star_idx
         else:
             b = actions.size
@@ -37,9 +38,8 @@ class MCAgent:
 
     def select_action(self, state):
         self.turn += 1
-        print("Turn = ", self.turn)
         self.state = state
-        print("State = ", self.state)
+        # print("State = ", self.state)
         actions = self.q[state, ]
         action = self.e_greedy(actions)
         self.action = action
@@ -64,7 +64,7 @@ class MCAgent:
     def update_q(self, new_state, reward):
         self.next_state = new_state
         self.q[self.state, self.action] = reward + (self.gamma * max(self.q[new_state, ]))
-        f"Turn = {self.turn} \nQ = {self.q}"
+        # f"Turn = {self.turn} \nQ = {self.q}"
 
     def store_trajectory(self, current_state, action, reward, next_state):
         if self.current_value >= 12 and self.current_value <= 21:

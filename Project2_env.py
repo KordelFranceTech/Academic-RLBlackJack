@@ -53,7 +53,7 @@ class Blackjack:
         if self.agent_total > 21 and self.usable_ace == 1:
             self.usable_ace = 0
             self.agent_total -= 10
-        print("Agent drew a", new_card, "and now has", self.agent_total, "points.")
+        # print("Agent drew a", new_card, "and now has", self.agent_total, "points.")
         if self.agent_total > 21:
             new_state = 201      # 201 is the losing state
         else:
@@ -76,8 +76,8 @@ class Blackjack:
         if self.dealer_card == 1 or d_card_2 == 1:
             self.dealer_ace = 1
             self.dealer_total += 10
-        print("Dealer has", self.dealer_card, "and", d_card_2)
-        print("Dealer has", self.dealer_total, "points.")
+        # print("Dealer has", self.dealer_card, "and", d_card_2)
+        # print("Dealer has", self.dealer_total, "points.")
 
         # deal two cards to the agent
         card_1 = self.deck.deal_card()
@@ -86,8 +86,8 @@ class Blackjack:
         if card_1 == 1 or card_2 == 1:
             self.usable_ace = 1
             self.agent_total += 10
-        print("Agent has", card_1, "and", card_2)
-        print("Agent has", self.agent_total, "points.")
+        # print("Agent has", card_1, "and", card_2)
+        # print("Agent has", self.agent_total, "points.")
 
         # check to see if the agent has a natural (ace + face card)
         if self.agent_total == 21:
@@ -104,7 +104,7 @@ class Blackjack:
                 if new_card == 1 and self.usable_ace == 0 and self.agent_total < 12:
                     self.usable_ace = 1
                     self.agent_total += 10
-                print("Agent drew a", new_card, "and now has", self.agent_total, "points.")
+                # print("Agent drew a", new_card, "and now has", self.agent_total, "points.")
             # now determine the initial state
             self.current_state = self.get_state_index()
 
